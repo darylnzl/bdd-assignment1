@@ -11,9 +11,9 @@ const publicController = {
     },
 
     searchPhonesByNameOrBrand: (req, res) => {
-        const searchQuery = req.query.search || ''; 
+        const { search } = req.query;
     
-        phonesModel.searchPhonesByNameOrBrand(searchQuery, (error, results) => {
+        publicModel.searchPhonesByNameOrBrand(search, (error, results) => {
           if (error) {
             console.error("Error searching phones:", error);
             res.status(500).json({ message: 'Failed to search phones' });
