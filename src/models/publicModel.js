@@ -6,7 +6,7 @@ var publicModel = {
     pool.query(SQLStatement, callback);
   },
 
-  searchPhonesByNameOrBrand: (query, callback) => {
+  searchPhonesByNameOrBrand: (searchQuery, callback) => {
     const SQLStatement = `
           SELECT * 
           FROM phones 

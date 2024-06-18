@@ -11,12 +11,15 @@ const publicController = {
     },
 
     searchPhonesByNameOrBrand: (req, res) => {
-        const query = req.query.query;
-        publicModel.searchPhones(query, (error, results) => {
+        const searchQuery = req.query.search || ''; 
+    
+        phonesModel.searchPhonesByNameOrBrand(searchQuery, (error, results) => {
           if (error) {
-            return res.status(500).json({ message: 'Failed to search phones' });
+            console.error("Error searching phones:", error);
+            res.status(500).json({ message: 'Failed to search phones' });
+          } else {
+            res.status(200).json(results);
           }
-          return res.status(200).json(results);
         });
       },
 
