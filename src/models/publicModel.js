@@ -22,7 +22,7 @@ var publicModel = {
   getAllBrands: (callback) => {
     const SQLStatement = "select * from brands";
     pool.query(SQLStatement, callback);
-  },
+  }
 
 
 };
