@@ -26,3 +26,5 @@ var publicModel = {
 
 
 };
+
+module.exports = publicModel;
