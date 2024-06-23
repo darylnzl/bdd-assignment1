@@ -1,9 +1,11 @@
 const express = require('express');
 const router = express.Router();
-const adminRoutes = require('./adminRoutes');
-const publicRoutes = require('./publicRoutes');
+const userRoutes = require('./userRoutes');
+const phoneRoutes = require('./phoneRoutes');
+const brandRoutes = require('./brandRoutes');
 
-router.use('/admin', adminRoutes);
-router.use('/public', publicRoutes);
+router.use('/user', userRoutes);
+router.use('/phones', phoneRoutes); 
+router.use('/brands', brandRoutes); 
 
 module.exports = router;
