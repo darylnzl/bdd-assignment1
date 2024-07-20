@@ -1,7 +1,7 @@
 const pool = require('../services/db');
 
 const userModel = {
-    // Function to register a new admin
+
     registerAdmin: (adminData, callback) => {
         const { name, email, password, role } = adminData;
         const SQL = 'INSERT INTO admins (name, email, password, role) VALUES (?, ?, ?, ?)';
@@ -11,12 +11,12 @@ const userModel = {
             if (error) {
                 callback(error, null);
             } else {
-                callback(null, results.insertId); // Return the ID of the inserted admin
+                callback(null, results.insertId); 
             }
         });
     },
 
-    // Function to login and validate credentials
+
     login: (email, password, callback) => {
         const SQL = 'SELECT * FROM admins WHERE email = ? AND password = ?';
         const values = [email, password];
@@ -25,24 +25,24 @@ const userModel = {
             if (error) {
                 callback(error, null);
             } else {
-                callback(null, results.length > 0); // Return true if credentials are valid
+                callback(null, results.length > 0); 
             }
         });
     },
 
-    // Function to get admin details by email
+ 
     getAdminByEmail: (email, callback) => {
         const SQL = 'SELECT admin_id, name, email, role FROM admins WHERE email = ?';
         pool.query(SQL, [email], (error, results) => {
             if (error) {
                 callback(error, null);
             } else {
-                callback(null, results[0]); // Return the first result (should be unique by email)
+                callback(null, results[0]); 
             }
         });
     },
 
-    // Add other CRUD operations as needed (updateAdmin, deleteAdmin, etc.)
+
 };
 
 module.exports = userModel;
