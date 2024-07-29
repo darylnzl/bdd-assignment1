@@ -6,6 +6,7 @@ const router = express.Router();
 
 router.get('/', phoneController.getAllPhones);
 router.get('/search', phoneController.searchPhonesByNameOrBrand);
+router.put('/', jwtMiddleware.verifyToken,jwtMiddleware.verifyAdminRole,phoneController.updatePhone);
 router.post('/', jwtMiddleware.verifyToken,jwtMiddleware.verifyAdminRole,phoneController.addPhone);
 
 module.exports = router;

@@ -13,6 +13,26 @@ const phoneController = {
         });
     },
 
+    updatePhone: (req, res) => {
+        const { phone_id, name, brand_id, price, description, imageURL } = req.body;
+    
+        if (!phone_id || !name || !brand_id || !price || !description) {
+            return res.status(400).json({ message: 'Required fields are missing' });
+        }
+    
+        const data = { phone_id, name, brand_id, price, description, imageURL };
+    
+        phoneModel.updatePhone(data, (error, results) => {
+            if (error) {
+                res.status(500).json({ message: 'Internal server error' });
+            } else if (results.affectedRows === 0) {
+                res.status(404).json({ message: 'Phone not found' });
+            } else {
+                res.status(200).json({ message: 'Phone updated successfully' });
+            }
+        });
+    },
+
     getAllPhones: (req, res) => {
         phoneModel.getAllPhones((error, results) => {
             if (error) {

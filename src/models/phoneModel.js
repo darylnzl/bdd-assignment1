@@ -8,6 +8,13 @@ const phoneModel = {
         pool.query(SQLStatement, VALUES, callback);
     },
 
+    updatePhone: (data, callback) => {
+        const SQLStatement = "UPDATE phones SET name=?, brand_id=?, price=?, description=?, imageURL=? WHERE phone_id=?";
+        const VALUES = [data.name, data.brand_id, data.price, data.description, data.imageURL, data.phone_id];
+    
+        pool.query(SQLStatement, VALUES, callback);
+    },
+
     getAllPhones: (callback) => {
         const SQLStatement = "SELECT * FROM phones";
         pool.query(SQLStatement, callback);
