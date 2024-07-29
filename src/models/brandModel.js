@@ -11,6 +11,15 @@ const brandModel = {
 
     },
 
+    deleteBrand:(data,callback)=>{
+
+        const SQLStatement="Delete into brands(name) values(?)";
+        const VALUES=[data.name];
+
+        pool.query(SQLStatement,VALUES,callback);
+
+    },
+
     getAllBrands: (callback) => {
         const SQLStatement = "select * from brands";
         pool.query(SQLStatement, callback);

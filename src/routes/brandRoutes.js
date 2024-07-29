@@ -5,5 +5,6 @@ const router = express.Router();
 
 router.get('/',brandController.getAllBrands);
 router.post('/',jwtMiddleware.verifyToken,jwtMiddleware.verifyAdminRole,brandController.addBrand);
+router.delete('/',brandController.deleteBrand);
 
 module.exports = router;
