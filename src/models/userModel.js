@@ -19,8 +19,8 @@ var userModel={
 
     insertNewUser:(data,callback)=>{
 
-        const SQLStatement="insert into admins(username,email,role,password) values(?,?,?,?)";
-        const VALUES=[data.username,data.email,data.role,data.password];
+        const SQLStatement="insert into admins(name,email,password,role) values(?,?,?,?)";
+        const VALUES=[data.name,data.email,data.password,data.role];
 
         pool.query(SQLStatement,VALUES,callback);
 

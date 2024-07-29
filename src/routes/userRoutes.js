@@ -4,7 +4,7 @@ const jwtMiddleware = require("../middlewares/jwtMiddleware");
 const router = express.Router();
 
 
-router.get("/",userController.getAllUser);
+router.get("/",jwtMiddleware.verifyToken,jwtMiddleware.verifyAdminRole,userController.getAllUser);
 router.get("/:userid",userController.getUserById);
 router.post("/",userController.createNewUser);
 router.put("/:userid",userController.updateUser);

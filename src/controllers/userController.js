@@ -40,10 +40,10 @@ var userController = {
     createNewUser: (req, res, next) => {
 
         const data = {
-            username: req.body.username,
+            name: req.body.name,
             email: req.body.email,
-            role: req.body.role,
-            password: req.body.password
+            password: req.body.password,
+            role: req.body.role
         };
         console.log(data);
         const callback = (error, results, fields) => {
