@@ -1,42 +1,146 @@
-const userModel = require('../models/userModel');
+const userModel = require("../models/userModel");
 
-const userController = {
-    registerAdmin: (req, res) => {
-        const { name, email, password, role } = req.body;
+var userController = {
 
-        if (!name || !email || !password || !role) {
-            return res.status(400).json({ message: 'All fields are required' });
+    getAllUser: (req, res, next) => {
+
+
+        const callback = (error, results, fields) => {
+
+            if (error) {
+                console.log("Error in getAllUser:", error);
+                res.status(500).json(error);
+            } else {
+                res.status(200).json(results);
+            }
         }
 
-        userModel.registerAdmin({ name, email, password, role }, (error, adminId) => {
-            if (error) {
-                console.error('Error registering admin:', error);
-                res.status(500).json({ message: 'Internal server error' });
-            } else {
-                res.status(201).json({ message: 'Admin registered successfully', adminId });
-            }
-        });
+        userModel.selectAllUsers(callback);
     },
 
-    login: (req, res) => {
-        const { email, password } = req.body;
+    getUserById: (req, res, next) => {
 
-        if (!email || !password) {
-            return res.status(400).json({ message: 'Email and password are required' });
+        const data = {
+            userid: req.params.userid
+        };
+
+        const callback = (error, results, fields) => {
+
+            if (error) {
+                console.log("Error in getUserById:", error);
+                res.status(500).json(error);
+            } else {
+                res.status(200).json(results);
+            }
         }
 
-        userModel.login(email, password, (error, isValid) => {
+        userModel.selectUserById(data, callback);
+    },
+
+    createNewUser: (req, res, next) => {
+
+        const data = {
+            username: req.body.username,
+            email: req.body.email,
+            role: req.body.role,
+            password: req.body.password
+        };
+        console.log(data);
+        const callback = (error, results, fields) => {
+
             if (error) {
-                console.error('Error in login:', error);
-                res.status(500).json({ message: 'Internal server error' });
-            } else if (!isValid) {
-                res.status(401).json({ message: 'Invalid credentials' });
+                console.log("Error in new user:", error);
+                res.status(500).json(error);
             } else {
-                res.status(200).json({ message: 'Login successful' });
+                res.status(201).json(results);
             }
-        });
+        }
+
+        userModel.insertNewUser(data, callback);
+    },
+
+
+    updateUser: (req, res, next) => {
+
+        const data = {
+            userid: req.params.userid,
+            email: req.body.email,
+
+            password: req.body.password
+        };
+        console.log(data);
+        const callback = (error, results, fields) => {
+
+            if (error) {
+                console.log("Error in updating user:", error);
+                res.status(500).json(error);
+            } else {
+                if (results.affectedRows == 0) {
+                    res.status(404).json({ "Message": "User not found" })
+                } else {
+                    res.status(204).json(results);
+                }
+            }
+        }
+
+        userModel.updateUser(data, callback);
+    },
+
+    deleteUserById: (req, res, next) => {
+
+        const data = {
+            userid: req.params.userid
+        };
+
+        const callback = (error, results, fields) => {
+
+            if (error) {
+                console.log("Error in delete user:", error);
+                res.status(500).json(error);
+            } else {
+                if (results.affectedRows == 0) {
+                    res.status(404).json({ "Message": "User not found" })
+                } else {
+                    res.status(204).json(results);
+                }
+            }
+        }
+
+        userModel.deleteUser(data, callback);
+    },
+
+    loginUser: (req, res, next) => {
+
+        const data = {
+            email: req.body.email,
+            password: req.body.password
+        };
+        console.log(data);
+        const callback = (error, results, fields) => {
+
+            if (error) {
+                console.log("Error in authenticating user:", error);
+                res.status(500).json(error);
+            } else {
+                if (results.length == 0) {
+                    res.status(404).json({ "Message": "User not found" })
+                } else {
+
+                    res.locals.userid=results[0].userid;
+                    res.locals.role=results[0].role;
+                    res.locals.message="User authenticated";
+                    
+                    next();
+                    //res.status(200).json(results);
+                }
+            }
+        }
+
+        userModel.loginUser(data, callback);
     }
 
-};
+
+
+}
 
 module.exports = userController;

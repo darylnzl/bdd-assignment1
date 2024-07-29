@@ -1,48 +1,61 @@
-const pool = require('../services/db');
+const pool=require('../services/db');
 
-const userModel = {
+var userModel={
 
-    registerAdmin: (adminData, callback) => {
-        const { name, email, password, role } = adminData;
-        const SQL = 'INSERT INTO admins (name, email, password, role) VALUES (?, ?, ?, ?)';
-        const values = [name, email, password, role];
-        
-        pool.query(SQL, values, (error, results) => {
-            if (error) {
-                callback(error, null);
-            } else {
-                callback(null, results.insertId); 
-            }
-        });
+    selectAllUsers:(callback)=>{
+
+        const SQLStatement="select * from admins";
+        pool.query(SQLStatement,callback);
+
+    },
+
+    selectUserById:(data,callback)=>{
+
+        const SQLStatement="select * from admins where userid=?";
+        const VALUES=[data.userid];
+        pool.query(SQLStatement,VALUES,callback);
+
+    },
+
+    insertNewUser:(data,callback)=>{
+
+        const SQLStatement="insert into admins(username,email,role,password) values(?,?,?,?)";
+        const VALUES=[data.username,data.email,data.role,data.password];
+
+        pool.query(SQLStatement,VALUES,callback);
+
+    },
+
+    updateUser:(data,callback)=>{
+
+        const SQLStatement="update admins set email=?,password=? where userid=?";
+        const VALUES=[data.email,data.password,data.userid];
+
+        pool.query(SQLStatement,VALUES,callback);
+
+    },
+
+    
+    deleteUser:(data,callback)=>{
+
+        const SQLStatement="Delete from admins where userid=?";
+        const VALUES=[data.userid];
+
+        pool.query(SQLStatement,VALUES,callback);
+
     },
 
 
-    login: (email, password, callback) => {
-        const SQL = 'SELECT * FROM admins WHERE email = ? AND password = ?';
-        const values = [email, password];
-        
-        pool.query(SQL, values, (error, results) => {
-            if (error) {
-                callback(error, null);
-            } else {
-                callback(null, results.length > 0); 
-            }
-        });
-    },
+    loginUser:(data,callback)=>{
 
- 
-    getAdminByEmail: (email, callback) => {
-        const SQL = 'SELECT admin_id, name, email, role FROM admins WHERE email = ?';
-        pool.query(SQL, [email], (error, results) => {
-            if (error) {
-                callback(error, null);
-            } else {
-                callback(null, results[0]); 
-            }
-        });
-    },
+        const SQLStatement="Select * from admins where email=? and password=?";
+        const VALUES=[data.email,data.password];
+
+        pool.query(SQLStatement,VALUES,callback);
+
+    }
 
 
-};
+}
 
-module.exports = userModel;
+module.exports=userModel;
