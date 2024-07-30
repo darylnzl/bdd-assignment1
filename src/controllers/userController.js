@@ -21,7 +21,7 @@ var userController = {
     getUserById: (req, res, next) => {
 
         const data = {
-            adminid: req.params.admin_id
+            admin_id: req.params.admin_id
         };
 
         const callback = (error, results, fields) => {
