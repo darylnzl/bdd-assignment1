@@ -11,8 +11,8 @@ var userModel={
 
     selectUserById:(data,callback)=>{
 
-        const SQLStatement="select * from admins where adminid=?";
-        const VALUES=[data.userid];
+        const SQLStatement="select * from admins where admin_id=?";
+        const VALUES=[data.admin_id];
         pool.query(SQLStatement,VALUES,callback);
 
     },
@@ -28,8 +28,8 @@ var userModel={
 
     updateUser:(data,callback)=>{
 
-        const SQLStatement="update admins set email=?,password=? where adminid=?";
-        const VALUES=[data.email,data.password,data.adminid];
+        const SQLStatement="update admins set email=?,password=? where admin_id=?";
+        const VALUES=[data.email,data.password,data.admin_id];
 
         pool.query(SQLStatement,VALUES,callback);
 
@@ -38,8 +38,8 @@ var userModel={
     
     deleteUser:(data,callback)=>{
 
-        const SQLStatement="Delete from admins where adminid=?";
-        const VALUES=[data.adminid];
+        const SQLStatement="Delete from admins where admin_id=?";
+        const VALUES=[data.admin_id];
 
         pool.query(SQLStatement,VALUES,callback);
 

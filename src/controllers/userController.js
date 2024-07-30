@@ -21,7 +21,7 @@ var userController = {
     getUserById: (req, res, next) => {
 
         const data = {
-            adminid: req.params.adminid
+            adminid: req.params.admin_id
         };
 
         const callback = (error, results, fields) => {
@@ -63,7 +63,7 @@ var userController = {
     updateUser: (req, res, next) => {
 
         const data = {
-            adminidid: req.params.adminid,
+            admin_id: req.params.admin_id,
             email: req.body.email,
 
             password: req.body.password
@@ -89,7 +89,7 @@ var userController = {
     deleteUserById: (req, res, next) => {
 
         const data = {
-            adminid: req.params.adminid
+            admin_id: req.params.admin_id
         };
 
         const callback = (error, results, fields) => {
@@ -126,7 +126,7 @@ var userController = {
                     res.status(404).json({ "Message": "User not found" })
                 } else {
 
-                    res.locals.adminid=results[0].adminid;
+                    res.locals.admin_id=results[0].admin_id;
                     res.locals.role=results[0].role;
                     res.locals.message="User authenticated";
                     
