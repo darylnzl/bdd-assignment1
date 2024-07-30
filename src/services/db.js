@@ -1,11 +1,11 @@
 const mysql = require('mysql2');
 
 const setting = {
-    connectionLimit: 10, // Set limit to 10 connections
+    connectionLimit: 50, // Set limit to 10 connections
     host: 'localhost',
     user: 'root',
     password: 'qwerty96',
-    database: 'Assignment1',
+    database: 'assignment1',
     dateStrings: true // Return date as string instead of Date object
 };
 
